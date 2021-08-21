@@ -1,1 +1,1 @@
-# compression LZ77
+# compression LZ77 and Huffman Coding
