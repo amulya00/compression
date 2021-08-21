@@ -1,1 +1,1 @@
-# compression
+# compression LZ77
