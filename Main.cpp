@@ -2,10 +2,13 @@
 using namespace std;
 
 #include "Compress.h"
+#include "BitBuffer.h"
 
 int main()
 {
-    string s;
-    cin >> s;
-    compress(s);
+    BitBuffer b;
+    b.add('a');
+    b.add('b');
+    b.add(4,2);
+    b.print();
 }

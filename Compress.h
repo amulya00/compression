@@ -20,7 +20,7 @@ pair<int, int> max_match(string &s, int idx, List *prev)
         }
         prev = prev->next;
     }
-    return make_pair(pos, mx);
+    return make_pair(idx-pos, mx);
 }
 
 void compress(string &s)
