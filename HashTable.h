@@ -10,7 +10,7 @@ struct HashTable
         {
             for (int j = 0; j < 256; ++j)
             {
-                Table[i][j] = new List;
+                Table[i][j] = NULL;
             }
         }
     }
