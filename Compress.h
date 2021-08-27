@@ -1,4 +1,5 @@
 #include "HashTable.h"
+#include "BitBuffer.h"
 
 pair<int, int> max_match(string &s, int idx, List *prev)
 {
@@ -20,15 +21,17 @@ pair<int, int> max_match(string &s, int idx, List *prev)
         }
         prev = prev->next;
     }
-    return make_pair(idx-pos, mx);
+    if (pos == -1)
+        return make_pair(pos, mx);
+    return make_pair(idx - pos, mx);
 }
 
-void compress(string &s)
+string compress(string &s)
 {
     HashTable ht;
     int cur = 0;
     int n = s.size();
-    string ans = "";
+    BitBuffer bb;
     while (cur < n)
     {
         char a = s[cur], b = s[cur + 1];
@@ -38,8 +41,9 @@ void compress(string &s)
             pair<int, int> len = max_match(s, cur, li);
             if (len.first == -1)
             {
+                // cout << s[cur] << "\n";
                 ht.AddNode(a, b, cur);
-                ans += s[cur];
+                bb.add(s[cur]);
                 ++cur;
             }
             else
@@ -48,20 +52,18 @@ void compress(string &s)
                 {
                     ht.AddNode(s[i + cur], s[i + cur + 1], i + cur);
                 }
-                ans += '$';
-                ans += to_string(len.first);
-                ans += ',';
-                ans += to_string(len.second);
-                ans += '$';
+                bb.add(len.first, len.second);
                 cur += len.second;
             }
         }
         else
         {
             ht.AddNode(a, b, cur);
-            ans += s[cur];
+            bb.add(s[cur]);
             ++cur;
         }
     }
-    cout << ans << "\n";
+    return bb.print();
 }
+
+// 0 00100110 0 11001110 0 01100110 0 11001110 0 1000011 0 00110011 0 01100111 0 000100110001100110011001110001100110010000110
