@@ -1,3 +1,7 @@
+using byte = unsigned char ;
+constexpr std::size_t BITS_PER_BYTE = std::numeric_limits<byte>::digits ;
+using bits_in_byte = std::bitset<BITS_PER_BYTE> ;
+
 int convert(int cur, int size, string &s)
 {
     int ans = 0;
@@ -10,8 +14,32 @@ int convert(int cur, int size, string &s)
     return ans;
 }
 
-string decompress(string &s)
+string decompress()
 {
+    // int size;
+    // unique_ptr<char> data;
+    // ifstream fin("compressed.bin", ios::in | ios::binary | ios::ate);
+    // if(fin.is_open()){
+    //     size = fin.tellg();
+    //     data = unique_ptr<char>(new char[size]);
+    //     fin.seekg(0, ios::beg);
+    //     fin.read(data.get(), size);
+    //     fin.close();
+    // }else{
+    //     throw runtime_error("Could not open file");
+    // }
+
+    std::ifstream t("sample.txt");
+    std::string sr((std::istreambuf_iterator<char>(t)),
+                 std::istreambuf_iterator<char>());
+
+    string s;
+    for(int i=0;i<sr.length();i++){
+        s += bits_in_byte( byte(sr[i])).to_string();
+    }
+    
+
+
     int n = s.size();
     string ans = "";
     // 0
